@@ -69,7 +69,7 @@ class EvoSimulation:
         self.time = time
         self.steps = steps
 
-    def _sim_JK(self, alpha: float) -> Generator[str, None, None]:
+    def _sim_JC(self, alpha: float) -> Generator[str, None, None]:
         sim_seq = list(self.seq)
         prob_trans = EvoSimulation._pJC_trans(self.time, alpha)
         for _ in range(self.steps):
@@ -97,11 +97,11 @@ class EvoSimulation:
                     sim_seq[i] = sub_letter
             yield ''.join(sim_seq)
 
-    def run_JK(self, alpha: float, /, *,
+    def run_JC(self, alpha: float, /, *,
                plotting: bool = True, output_file: str = '') -> List[int]:
         dists = [
             EvoSimulation.count_distance(seq)
-            for seq in self._sim_JK(alpha)
+            for seq in self._sim_JC(alpha)
         ]
         if plotting:
             plot([dists], ['JC69'],
@@ -224,7 +224,7 @@ if __name__ == '__main__':
     try:
         sim = EvoSimulation(sequences[0], args.time, args.steps)
         if args.model == 'jukes-cantor':
-            dists = sim.run_JK(args.alpha, output_file=output_file)
+            dists = sim.run_JC(args.alpha, output_file=output_file)
         elif args.model == 'kimura':
             dists = sim.run_K(args.alpha, args.beta, output_file=output_file)
         else:
