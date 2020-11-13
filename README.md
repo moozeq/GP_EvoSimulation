@@ -19,6 +19,10 @@ Evolution models simulator
         <p>
             <img src="sim_JC.png" width="70%">
         </p>
+        <h4>Kimura model simulation</h4>
+        <p>
+            <img src="sim_K.png" width="70%">
+        </p>
         <h4>Jukes-Cantor models with different parameters</h4>
         <p>
             <img src="sim_JC_diff.png" width="70%">
