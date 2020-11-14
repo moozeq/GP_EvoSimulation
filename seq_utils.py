@@ -1,4 +1,3 @@
-import sys
 from pathlib import Path
 from typing import List
 
@@ -37,7 +36,7 @@ def download_sequence(seq_id: str) -> str:
     handle = Entrez.efetch(db='nucleotide', id=seq_id, rettype='fasta', retmode='text')
     record = handle.read()
     if not record:
-        raise IndexError(f'[-] Downloading sequence {seq_id} FAILED')
+        raise Exception(f'[-] Downloading sequence {seq_id} FAILED')
     with open(seq_filename, 'w') as f:
         f.write(record)
     print(f'[+] Downloaded sequence {seq_id} stored at {seq_filename}')
