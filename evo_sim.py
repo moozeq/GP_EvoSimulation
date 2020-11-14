@@ -3,8 +3,8 @@ import argparse
 import math
 import random
 import sys
-from typing import List, Generator
 from collections import Counter
+from typing import List, Generator
 
 from seq_utils import transitions, transversions, plot, is_transition, is_transversion, download_sequence, \
     read_sequences
@@ -56,6 +56,7 @@ class EvoSimulation:
 
     def run_JC(self, alpha: float, /, *,
                plotting: bool = True, output_file: str = '') -> List[int]:
+        print(f'[*] Simulating Jukes-Cantor, alpha = {alpha}')
         dists = [
             EvoSimulation.count_distance(seq)
             for seq in self._sim_JC(alpha)
@@ -70,6 +71,7 @@ class EvoSimulation:
 
     def run_K(self, alpha: float, beta: float, /, *,
               plotting: bool = True, output_file: str = '') -> List[int]:
+        print(f'[*] Simulating Kimura, alpha = {alpha}, beta = {beta}')
         dists = [
             EvoSimulation.count_distance(seq)
             for seq in self._sim_K(alpha, beta)

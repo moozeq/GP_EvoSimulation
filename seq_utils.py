@@ -39,7 +39,7 @@ def download_sequence(seq_id: str) -> str:
         raise Exception(f'[-] Downloading sequence {seq_id} FAILED')
     with open(seq_filename, 'w') as f:
         f.write(record)
-    print(f'[+] Downloaded sequence {seq_id} stored at {seq_filename}')
+    print(f'[+] Downloaded sequence stored at {seq_filename}')
     return seq_filename
 
 
@@ -47,6 +47,7 @@ def read_sequences(filename: str) -> List[str]:
     from Bio import SeqIO
     print(f'[*] Reading sequences from {filename}')
     seqs = [str(record.seq) for record in SeqIO.parse(filename, 'fasta')]
+    print(f'[+] Read {len(seqs)} sequences')
     return seqs
 
 
