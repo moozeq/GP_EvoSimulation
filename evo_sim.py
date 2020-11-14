@@ -3,6 +3,7 @@ import argparse
 import math
 import random
 import sys
+from pathlib import Path
 from typing import List, Generator
 from collections import Counter
 
@@ -34,6 +35,20 @@ def is_transversion(n1: str, n2: str) -> bool:
 def abort(msg: str):
     print(f'[ERROR] {msg}')
     sys.exit(1)
+
+
+def download_sequence(seq: str) -> str:
+    seq_filename = f'{seq}.fasta'
+    if Path(seq_filename).exists():
+        return seq_filename
+
+    from Bio import Entrez
+    Entrez.email = 'A.N.Other@example.com'
+    handle = Entrez.efetch(db="nucleotide", id=seq, rettype="fasta", retmode="text")
+    record = handle.read()
+    with open(seq_filename, 'w') as f:
+        f.write(record)
+    return seq_filename
 
 
 def read_sequences(filename: str) -> List[str]:
@@ -210,7 +225,7 @@ class EvoSimulation:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Evolution models simulator')
-    parser.add_argument('file', type=str, help='fasta file with sequence')
+    parser.add_argument('file', type=str, help='fasta filename with sequence or NCBI sequence ID')
     parser.add_argument('model', type=str, choices=['jukes-cantor', 'kimura'], help='evolutionary model')
     parser.add_argument('-a', '--alpha', type=float, default=EvoSimulation.DEFAULT_ALPHA, help='alpha param')
     parser.add_argument('-b', '--beta', type=float, default=EvoSimulation.DEFAULT_BETA, help='beta param (for Kimura model)')
@@ -219,6 +234,8 @@ if __name__ == '__main__':
     parser.add_argument('-o', '--output', type=str, help='output file')
     args = parser.parse_args()
 
+    if not args.file.endswith('.fasta'):
+        args.file = download_sequence(args.file)
     sequences = read_sequences(args.file)
     output_file = args.output if args.output else ''
     try:

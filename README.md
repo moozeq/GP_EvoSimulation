@@ -5,7 +5,10 @@ Evolution models simulator
 # Example
 
 ```bash
-# Jukes-Cantor model simulation
+# Jukes-Cantor model simulation from NCBI sequence ID
+./evo_sim.py U00096.3 jukes-cantor --time=1.0 --steps=100 --alpha=0.25 -o sim_JC.png
+
+# Jukes-Cantor model simulation from file
 ./evo_sim.py U00096.3.fasta jukes-cantor --time=1.0 --steps=100 --alpha=0.25 -o sim_JC.png
 
 # same for Kimura model
