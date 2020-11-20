@@ -6,8 +6,8 @@ import sys
 from collections import Counter
 from typing import List, Generator
 
-from seq_utils import transitions, transversions, plot, is_transition, is_transversion, download_sequence, \
-    read_sequences
+from seq_utils import (transitions, transversions, plot, is_transition, is_transversion, download_sequence,
+                       read_sequences, )
 
 
 def abort(msg: str):
@@ -169,18 +169,21 @@ class EvoSimulation:
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Evolution models simulator')
-    parser.add_argument('file', type=str, help='fasta filename with sequence or NCBI sequence ID')
+    parser.add_argument('seq', type=str, help='sequence fasta filename or NCBI ID')
     parser.add_argument('model', type=str, choices=['jukes-cantor', 'kimura'], help='evolutionary model')
     parser.add_argument('-a', '--alpha', type=float, default=EvoSimulation.DEFAULT_ALPHA, help='alpha param')
-    parser.add_argument('-b', '--beta', type=float, default=EvoSimulation.DEFAULT_BETA, help='beta param (for Kimura model)')
-    parser.add_argument('-d', '--time', type=float, default=EvoSimulation.DEFAULT_TIME, help='time delta of single step')
-    parser.add_argument('-K', '--steps', type=int, default=EvoSimulation.DEFAULT_STEPS, help='how many simulation steps')
+    parser.add_argument('-b', '--beta', type=float, default=EvoSimulation.DEFAULT_BETA,
+                        help='beta param (for Kimura model)')
+    parser.add_argument('-d', '--time', type=float, default=EvoSimulation.DEFAULT_TIME,
+                        help='time delta of single step')
+    parser.add_argument('-K', '--steps', type=int, default=EvoSimulation.DEFAULT_STEPS,
+                        help='how many simulation steps')
     parser.add_argument('-o', '--output', type=str, help='output file')
     args = parser.parse_args()
 
-    if not args.file.endswith('.fasta'):
-        args.file = download_sequence(args.file)
-    sequences = read_sequences(args.file)
+    if not args.seq.endswith('.fasta'):
+        args.seq = download_sequence(args.seq)
+    sequences = read_sequences(args.seq)
     output_file = args.output if args.output else ''
     try:
         sim = EvoSimulation(sequences[0], args.time, args.steps)

@@ -2,18 +2,18 @@ from pathlib import Path
 from typing import List
 
 transitions = {
-    'A': ['T'],
-    'C': ['G'],
-    'T': ['A'],
-    'G': ['C'],
+    'A': ['G'],
+    'C': ['T'],
+    'T': ['C'],
+    'G': ['A'],
 }
 
 
 transversions = {
-    'A': ['C', 'G'],
-    'C': ['A', 'T'],
-    'T': ['C', 'G'],
-    'G': ['A', 'T'],
+    'A': ['C', 'T'],
+    'C': ['A', 'G'],
+    'T': ['A', 'G'],
+    'G': ['C', 'T'],
 }
 
 
